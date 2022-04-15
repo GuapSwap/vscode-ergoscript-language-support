@@ -1,0 +1,25 @@
+{
+    "name": "vscode-ergoscript-language-support",
+    "displayName": "ErgoScript Language Support",
+    "description": "Language support features for ErgoScript",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.66.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "ergoscript",
+            "aliases": ["ErgoScript", "ergoscript"],
+            "extensions": [".ergoscript",".es",".ergo"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "ergoscript",
+            "scopeName": "source.ergoscript",
+            "path": "./syntaxes/ergoscript.tmLanguage.json"
+        }]
+    }
+}
