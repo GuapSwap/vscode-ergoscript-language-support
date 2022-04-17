@@ -4,6 +4,15 @@
     "description": "Language support features for ErgoScript in VS Code",
     "version": "0.1.0",
     "publisher": "guapswap",
+    "author": {
+        "name": "GuapSwap"
+    },
+    "license": "SEE LICENSE IN THE LICENSE",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/GuapSwap/vscode-ergoscript-language-support.git"
+    },
+    "icon": "images/GuapSwap-vscode-icon.png",
     "engines": {
         "vscode": "^1.66.0"
     },
