@@ -3,6 +3,7 @@
     "displayName": "ErgoScript Language Support",
     "description": "Language support features for ErgoScript in VS Code",
     "version": "0.1.0",
+    "publisher": "guapswap",
     "engines": {
         "vscode": "^1.66.0"
     },
