@@ -1,10 +1,10 @@
-# vscode-ergoscript-language-support README
+# vscode-ergoscript-language-support
 
 Language support features for ErgoScript in VS Code.
 
 ## Features
 
-1. Syntax highlighiting
+1. Syntax highlighting
 
 ## Requirements
 
@@ -12,9 +12,9 @@ Language support features for ErgoScript in VS Code.
 
 1. `.ergoscript`
 2. `.es`
-3. `ergo`
-4. `ergs`
-5. `ergscript`
+3. `.ergo`
+4. `.ergs`
+5. `.ergscript`
 
 
 

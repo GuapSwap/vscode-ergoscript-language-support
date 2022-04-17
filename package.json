@@ -2,7 +2,7 @@
     "name": "vscode-ergoscript-language-support",
     "displayName": "ErgoScript Language Support",
     "description": "Language support features for ErgoScript in VS Code",
-    "version": "0.1.0",
+    "version": "0.1.0-beta",
     "publisher": "guapswap",
     "author": {
         "name": "GuapSwap"
