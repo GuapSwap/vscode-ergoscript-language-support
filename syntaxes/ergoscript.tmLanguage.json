@@ -2,30 +2,57 @@
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "ErgoScript",
 	"patterns": [
-		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#strings"
-		}
+		{ "include": "#meta-block" }
 	],
 	"repository": {
-		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.ergoscript",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
+		"meta-block": {
+			"name": "meta.block.ergoscript",
+			"begin": "\\{",
+			"end": "\\}",
+			"patterns": [
+				{ "include": "#keywords" },
+				{ "include": "#storage" },
+				{ "include": "#support" },
+				{ "include": "#meta-type-annotation" },
+				{"include": "$self" }
+			],
+			"repository": {
+			}
 		},
-		"strings": {
-			"name": "string.quoted.double.ergoscript",
-			"begin": "\"",
-			"end": "\"",
+		"keywords": {
 			"patterns": [
 				{
-					"name": "constant.character.escape.ergoscript",
-					"match": "\\\\."
+					"name": "keyword.control.flow.ergoscript",
+					"match": "\\b(if|else)\\b"
 				}
 			]
+		},
+		"storage": {
+			"patterns": [
+				{
+					"name": "storage.type.ergoscript",
+					"match": "\\b(val)\\b"
+				}
+			]
+		},
+		"support": {
+			"patterns": [
+				 {
+					 "name": "support.variable.language.ergoscript",
+					 "match": "\\b(CONTEXT|HEIGHT|SELF|INPUTS|OUTPUTS)\\b"
+				 },
+				 {
+					 "name": "support.function.ergoscript",
+					 "match": "\\b(allOf|anyOf|xorOf|atLeast|ZKProof|sigmaProp|blake2b256|sha256|byteArrayToBigInt|longToByteArray|decodePoint|getVar|proveDHTuple|proveDlog|fromBase58|fromBase64|PK|deserialize|substConstants)\\b"
+				 }
+			]
+		},
+		"meta-type-annotation": {
+			"name": "meta.type.annotation.ergoscript",
+			"match": "\\b(Unit|Boolean|Byte|Short|Int|Long|BigInt|SigmaProp|AvlTree|GroupElement|Box|Option|Coll)\\b",
+			"captures": {
+				"0": { "name": "entity.name.type.ergoscript" }
+			}
 		}
 	},
 	"scopeName": "source.ergoscript"
