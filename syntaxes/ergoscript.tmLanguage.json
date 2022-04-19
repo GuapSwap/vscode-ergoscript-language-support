@@ -10,28 +10,150 @@
 			"begin": "\\{",
 			"end": "\\}",
 			"patterns": [
-				{ "include": "#keywords" },
+				{ "include": "#comment" },
+				{ "include": "#keyword" },
+				{ "include": "#constant" },
+				{ "include": "#string" },
 				{ "include": "#storage" },
 				{ "include": "#support" },
+				{ "include": "#meta-bracket" },
+				{ "include": "#meta-function" },
 				{ "include": "#meta-type-annotation" },
-				{"include": "$self" }
+				{ "include": "#variable" },
+				{ "include": "#punctuation" },
+				{ "include": "$self" }
 			],
 			"repository": {
 			}
 		},
-		"keywords": {
+		"comment": {
 			"patterns": [
-				{
+				{ "include": "#line-comment" },
+				{ "include": "#block" }
+			],
+			"repository": {
+				"line-comment": {
+					"name": "comment.line.ergoscript",
+					"match": "//.*$"
+				},
+				"block": {
+					"patterns": [
+						{ "include": "#block-documentation" },
+						{ "include": "#block-multi-line-comment" }
+					],
+					"repository": {
+						"block-documentation": {
+							"name": "comment.block.documentation.ergoscript",
+							"begin": "/\\*\\*",
+							"end": "\\*/"
+						},
+						"block-multi-line-comment": {
+							"name": "comment.block.ergoscript",
+							"begin": "/\\*",
+							"end": "\\*/"
+						}
+					}
+				}
+			}
+		},
+		"keyword": {
+			"patterns": [
+				{ "include": "#control-flow" },
+				{ "include": "#operator" }
+			],
+			"repository": {
+				"control-flow": {
 					"name": "keyword.control.flow.ergoscript",
 					"match": "\\b(if|else)\\b"
+				},
+				"operator": {
+					"patterns": [
+						{ "include": "#operator-increment" },
+						{ "include": "#operator-arithmetic" },
+						{ "include": "#operator-comparison" },
+						{ "include": "#operator-assignment" },
+						{ "include": "#operator-logical" },
+						{ "include": "#operator-bitwise" },
+						{ "include": "#operator-type-annotation" }
+					],
+					"repository": {
+						"operator-increment": {
+							"name": "keyword.operator.increment.ergoscript",
+							"match": "\\+\\+"
+						},
+						"operator-arithmetic": {
+							"name": "keyword.operator.arithmetic.ergoscript",
+							"match": "\\+|\\-|\\*|\\/|\\%"
+						},
+						"operator-comparison": {
+							"name": "keyword.operator.comparison.ergoscript",
+							"match": "\\==|\\!=|\\<=|\\>=|\\<|\\>"
+						},
+						"operator-assignment": {
+							"name": "keyword.operator.assigment.ergoscript",
+							"match": "\\="
+						},
+						"operator-logical": {},
+						"operator-bitwise": {},
+						"operator-type-annotation": {
+							"name": "keyword.operator.type.annotation.ergoscript",
+							"match": "\\:"
+						}
+					}
 				}
-			]
+			}
+		},
+		"constant": {
+			"patterns": [
+				{ "include": "#numeric"},
+				{ "include": "#language" }
+			],
+			"repository": {
+				"numeric": {
+					"patterns": [
+						{
+							"name": "constant.numeric.ergoscript",
+							"match": "\\b(0x[0-9a-fA-F]+|[0-9L]+?)\\b"
+						}
+					]
+				},
+				"language": {
+					"patterns": [
+						{
+							"name": "constant.language.ergoscript",
+							"match": "\\b(true|false)\\b"
+						}
+					]
+				}
+			}
+		},
+		"string": {
+			"patterns": [
+				{ 
+					"name": "string.quoted.single.ergoscript",
+					"begin": "'",
+					"end": "'",
+					"patterns": []
+				},
+				{
+					"name": "string.quoted.double.ergoscript",
+					"begin": "\"",
+					"end": "\"",
+					"patterns": []
+				}
+			],
+			"repository": {
+			}
 		},
 		"storage": {
 			"patterns": [
 				{
-					"name": "storage.type.ergoscript",
+					"name": "storage.type.variable.ergoscript",
 					"match": "\\b(val)\\b"
+				},
+				{
+					"name": "storage.type.function.ergoscript",
+					"match": "\\b(def)\\b"
 				}
 			]
 		},
@@ -47,12 +169,60 @@
 				 }
 			]
 		},
+		"meta-bracket": {
+			"patterns": [
+				{
+					"name": "meta.bracket.ergoscript",
+					"match": "\\[|\\]"
+				},
+				{
+					"name": "meta.bracket.parentheses.ergoscript",
+					"match": "\\(|\\)"
+				}
+			]
+		},
+		"meta-function": {
+			"name": "meta.function.ergoscript",	
+			"match": "([_$[:alpha:]][_$[:alnum:]]*)(\\!)?(\\()",
+			"captures": {
+				"1": { "name": "entity.name.function.ergoscript" }
+			}
+		},
 		"meta-type-annotation": {
 			"name": "meta.type.annotation.ergoscript",
-			"match": "\\b(Unit|Boolean|Byte|Short|Int|Long|BigInt|SigmaProp|AvlTree|GroupElement|Box|Option|Coll)\\b",
+			"match": "\\b(Unit|Boolean|Byte|Short|Int|Long|BigInt|SigmaProp|AvlTree|GroupElement|Box|Option|Coll|Numeric|Header|PreHeader)\\b",
 			"captures": {
 				"0": { "name": "entity.name.type.ergoscript" }
 			}
+		},
+		"variable": {
+			"patterns": [
+				{ "include": "#variable-parameter-list" },
+				{ "include": "#variable-declaration"}
+			],
+			"repository": {
+				"variable-parameter-list": {
+					"match": "(?<=[^\\._$a-zA-Z0-9])(`[^`]+`|[_a-z\\$\\p{Lo}\\p{Nl}\\p{Ll}][A-Z\\p{Lt}\\p{Lu}_a-z\\$\\p{Lo}\\p{Nl}\\p{Ll}0-9]*(?:(?<=_)[!#%&*+\\-\\/:<>=?@^|~\\p{Sm}\\p{So}]+)?)\\s*(:)\\s+",
+					"captures": {
+						"1": { "name": "variable.parameter.ergoscript" },
+						"2": { "name": "keyword.operator.type.annotation.ergoscript" }
+					}
+				},
+				"variable-declaration": {
+					"match": "([_$[:alpha:]][_$[:alnum:]]*)(\\!)?",
+					"captures": {
+						"1": { "name": "variable.other.declaration.ergoscript" }
+					}
+				}
+			}
+		},
+		"punctuation": {
+			"patterns": [
+				{
+					"name": "punctuation.comma.ergoscript",
+					"match": ","
+				}
+			]
 		}
 	},
 	"scopeName": "source.ergoscript"
